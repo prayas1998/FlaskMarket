@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Register Page
+{% endblock %}
+
+{% block content %}
+
+<body class="text-center">
+<div class="container">
+    <form method="POST" class="form-register" style="color:white">
+        {{ form.hidden_tag() }}
+        <img class="mb-4" src="{{ url_for('static', filename='flasklogo.png') }}" alt="Logo"
+             style="width: 350px; height: auto;">
+        <h1 class="h3 mb-3 font-weight-normal">
+            Please Create your Account
+        </h1>
+        <br>
+        <div class="text-left mt-2">
+            {{ form.username.label() }}
+            {{ form.username(class='form-control', placeholder='Enter Username') }}
+        </div>
+
+        <div class="text-left mt-2">
+            {{ form.email_address.label() }}
+            {{ form.email_address(class='form-control', placeholder='Email') }}
+            <small class="form-text text-white mb-2">We'll never share your email with anyone else.</small>
+        </div>
+
+        <div class="text-left mt-2">
+            {{ form.password1.label() }}
+            {{ form.password1(class='form-control', placeholder='Enter Password') }}
+        </div>
+
+        <div class="text-left mt-2">
+            {{ form.password2.label() }}
+            {{ form.password2(class='form-control', placeholder='Re-Enter Your Password') }}
+        </div>
+        <br>
+
+        <div class="text-left">
+            {{ form.submit(class="btn-block btn-primary btn-lg") }}
+        </div>
+
+        <h6 class="mt-4">Already have an account? <a class="text-primary" href="{{ url_for('login_page') }}"><em>Sign in</em></a> </h6>
+
+    </form>
+</div>
+</body>
+{% endblock %}
