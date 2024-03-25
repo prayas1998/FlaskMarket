@@ -20,6 +20,8 @@ class User(db.Model):
     def password(self, plain_text_password):
         self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
 
+    def check_password_correction(self, attempted_password):
+        return bcrypt.check_password_hash(self.password_hash, attempted_password)
 
 class Item(db.Model):  # Inheriting db.Model class to Item class to tell database that this will be created as a table.
     id = db.Column(db.Integer(), primary_key=True)
