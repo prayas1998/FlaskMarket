@@ -45,13 +45,14 @@ def register_page():
 @app.route("/login", methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
-    attempted_user = User.query.get(form.username.data).first()
-    if attempted_user and attempted_user.check_password_correction(attempted_password='form.password.data'):
-        login_user(attempted_user)
-        flash(f'Success! You are now logged in as {attempted_user}', category='success')
-        return redirect(url_for('market_page'))
+    if form.validate_on_submit():
+        attempted_user = User.query.filter_by(username=form.username.data).first()
+        if attempted_user and attempted_user.check_password_correction(attempted_password=form.password.data):
+            login_user(attempted_user)
+            flash(f'Success! You are now logged in as {attempted_user.username}', category='success')
+            return redirect(url_for('market_page'))
 
-    else:
-        flash('Username and passwords do not match. Please try again!', category='danger')
+        else:
+            flash('Username and passwords do not match. Please try again!', category='danger')
 
     return render_template('login.html', form=form)
