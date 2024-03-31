@@ -29,6 +29,13 @@ class User(db.Model, UserMixin):
     def check_password_correction(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
 
+    @property
+    def prettier_budget(self):
+        if len(str(self.budget)) >= 4:
+            return f'{str(self.budget)[:-3]},{str(self.budget)[-3:]}'
+        else:
+            return f'{str(self.budget)}'
+
 
 class Item(db.Model):  # Inheriting db.Model class to Item class to tell database that this will be created as a table.
     id = db.Column(db.Integer(), primary_key=True)
