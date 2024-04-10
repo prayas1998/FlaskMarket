@@ -18,11 +18,11 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'User {self.username}'
 
-    @property
+    @property  # Used here as a GETTER method
     def password(self):
         return self.password
 
-    @password.setter
+    @password.setter # Used here as a SETTER method
     def password(self, plain_text_password):
         self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
 
