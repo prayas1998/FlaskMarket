@@ -39,6 +39,9 @@ class User(db.Model, UserMixin):
     def can_purchase(self, item_obj):
         return self.budget >= item_obj.price
 
+    def can_sell(self, item_obj):
+        return item_obj in self.items   # As we have items columns in User this expression will let us know if the user is owner of item.
+
 
 class Item(db.Model):  # Inheriting db.Model class to Item class to tell database that this will be created as a table.
     id = db.Column(db.Integer(), primary_key=True)
@@ -54,4 +57,9 @@ class Item(db.Model):  # Inheriting db.Model class to Item class to tell databas
     def buy(self, user):
         self.owner = user.id
         user.budget -= self.price
+        db.session.commit()
+
+    def sell(self,user):
+        self.owner = None
+        user.budget += self.price
         db.session.commit()

@@ -34,8 +34,12 @@ Market Page
                 <td>{{ item['barcode'] }}</td>
                 <td>Rs. {{ item['price'] }}</td>
                 <td>
-                    <button class="btn btn-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{ item.id }}">More Info</button>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Modal-ConfirmPurchase-{{ item.id }}">Purchase This Item</button>
+                    <button class="btn btn-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{ item.id }}">More
+                        Info
+                    </button>
+                    <button type="button" class="btn btn-success" data-toggle="modal"
+                            data-target="#Modal-ConfirmPurchase-{{ item.id }}">Purchase This Item
+                    </button>
                 </td>
             </tr>
             {% endfor %}
@@ -46,6 +50,26 @@ Market Page
         <h2>Owned Items</h2>
         <p>Sell an item to put it back on the market</p>
         <br>
+        <div class="row">
+            {% for owned_item in owned_items%}
+            {% include 'includes/owned_items_modals.html' %}
+            <div class="col-md-6">
+                <!--As per bootstrap max size that an HTML element can be implemented in a row is 12. So col-md-6 will ensure only two cards are displayed in a row-->
+                <div style="margin-bottom: 5px" class="card text-center bg-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ owned_item.name }}</h5>
+                        <button type="button" class="btn btn-outline-danger" style="margin-bottom: 5px"
+                                data-toggle="modal" data-target="#Modal-ConfirmSelling-{{ owned_item.id }}">
+                            Sell this Item
+                        </button>
+                        <p class="card-text"><strong>
+                            This item costs <span style="color: orange">${{ owned_item.price }}</span>
+                        </strong></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
