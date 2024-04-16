@@ -36,6 +36,9 @@ class User(db.Model, UserMixin):
         else:
             return f'{str(self.budget)}'
 
+    def can_purchase(self, item_obj):
+        return self.budget >= item_obj.price
+
 
 class Item(db.Model):  # Inheriting db.Model class to Item class to tell database that this will be created as a table.
     id = db.Column(db.Integer(), primary_key=True)
@@ -47,3 +50,8 @@ class Item(db.Model):  # Inheriting db.Model class to Item class to tell databas
 
     def __repr__(self):
         return f'Item {self.name}'  # Otherwise the items will be shown as [<Item1>, <Item2>]
+
+    def buy(self, user):
+        self.owner = user.id
+        user.budget -= self.price
+        db.session.commit()
